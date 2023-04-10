@@ -1,0 +1,532 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wyzard</title>
+    <link rel="icon" type="image/png" href="icon.png" />
+
+    <style>
+      @keyframes gradientBG {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .summary-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+      }
+
+      .summary-label {
+        font-weight: bold;
+        margin-right: 8px;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background-image: linear-gradient(135deg, #68f1d947 0%, #63e7da94 100%);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        position: relative;
+      }
+
+      .wizard-container {
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        width: 100%;
+        max-width: 600px;
+        text-align: center;
+        position: relative;
+        z-index: 2;
+      }
+
+      .wizard {
+        position: relative;
+      }
+
+      .step {
+        display: none;
+        opacity: 0;
+        animation: fadeIn 0.5s forwards;
+      }
+
+      .step.active {
+        display: block;
+      }
+
+      .error-msg {
+        color: red;
+        font-size: 14px;
+        display: none;
+        margin: 0;
+      }
+
+      button {
+        background-color: #63e7da;
+        color: #fff;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        font-size: 16px;
+        margin: 10px;
+        padding: 10px 20px;
+        text-align: center;
+        transition: background-color 0.3s, transform 0.3s;
+      }
+
+      button:hover {
+        background-color: #4db6ac;
+        transform: scale(1.05);
+      }
+
+      .start-btn,
+      .launch-btn {
+        font-size: 20px;
+        padding: 15px 30px;
+      }
+
+      input {
+        display: block;
+        margin: 10px auto;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 80%;
+        outline: none;
+        transition: box-shadow 0.3s, border-color 0.3s;
+      }
+
+      input:focus {
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        border-color: #63e7da;
+      }
+
+      .input-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+      }
+
+      .edit-btn {
+        background-color: #63e7da;
+        color: #fff;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        font-size: 14px;
+        margin-left: 5px;
+        padding: 6px 10px;
+        text-align: center;
+        transition: background-color 0.3s, transform 0.3s;
+      }
+
+      .edit-btn:hover {
+        background-color: #4db6ac;
+        transform: scale(1.05);
+      }
+
+      .accordion {
+        max-width: 500px;
+      }
+
+      .input-group {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 15px;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      grammarly-editor-plugin {
+        --grammarly-default-font-family: Optima, sans-serif;
+        --grammarly-interactive-color: rgb(99, 231, 218);
+        --grammarly-default-border-radius: 30px;
+        --grammarly-card-border-radius: 0px;
+      }
+
+      label {
+        display: block;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        text-align: center;
+      }
+      @keyframes spinner {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      bodY {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      .center {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .wave {
+        width: 2px;
+        height: 40px;
+        background: linear-gradient(45deg, cyan, #fff);
+        margin: 10px;
+        animation: wave 1s linear infinite;
+        border-radius: 20px;
+      }
+      .wave:nth-child(2) {
+        animation-delay: 0.1s;
+      }
+      .wave:nth-child(3) {
+        animation-delay: 0.2s;
+      }
+      .wave:nth-child(4) {
+        animation-delay: 0.3s;
+      }
+      .wave:nth-child(5) {
+        animation-delay: 0.4s;
+      }
+      .wave:nth-child(6) {
+        animation-delay: 0.5s;
+      }
+      .wave:nth-child(7) {
+        animation-delay: 0.6s;
+      }
+      .wave:nth-child(8) {
+        animation-delay: 0.7s;
+      }
+      .wave:nth-child(9) {
+        animation-delay: 0.8s;
+      }
+      .wave:nth-child(10) {
+        animation-delay: 0.9s;
+      }
+
+      @keyframes wave {
+        0% {
+          transform: scale(0);
+        }
+        50% {
+          transform: scale(1);
+        }
+        100% {
+          transform: scale(0);
+        }
+      }
+      .summaryDiv {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 15px;
+      }
+
+      .loading {
+        position: relative;
+        padding-right: 30px;
+      }
+
+      .loading::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        width: 20px;
+        height: 20px;
+        border: 2px solid #ccc;
+        border-top-color: #63e7da;
+        border-radius: 50%;
+        animation: spinner 0.6s linear infinite;
+        transform: translateY(-50%);
+      }
+
+      h2 {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+
+      .summary-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        font-size: 16px;
+        margin-right: 20px;
+      }
+
+      .summary-label {
+        font-weight: bold;
+        margin-left: 20px;
+      }
+      .label-value {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
+      .logout-btn {
+        background-color: #63e7da;
+        position: absolute;
+        left: 0px;
+        bottom: -10px;
+        border: none;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        width: 40px;
+        height: 40px;
+      }
+
+      #settingsBtn {
+        position: absolute;
+        background-color: #63e7da;
+        bottom: -10px;
+        border: none;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        width: 40px;
+        height: 40px;
+        right: 0px;
+      }
+      .logout-btn:hover {
+        background-color: #2980b9;
+      }
+
+      .logout-btn i {
+        line-height: 20px;
+      }
+      #settingsBtn:hover {
+        background-color: #2980b9;
+      }
+
+      #settingsBtn i {
+        line-height: 20px;
+      }
+      .hidden {
+        display: none;
+      }
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .popup {
+        background-color: #ffffff;
+        border-radius: 5px;
+        padding: 20px;
+        width: 80%;
+        max-width: 500px;
+      }
+      .input-container {
+        margin-bottom: 10px;
+      }
+      .input-container label {
+        display: block;
+        margin-bottom: 5px;
+      }
+      #saveSettings {
+        background-color: #4caf50;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 10px 2px;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
+      .opacity0 {
+        opacity: 0;
+      }
+      .overlay.hidden {
+        display: none;
+      }
+      .popup {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+      }
+      .input-container {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 10px;
+      }
+      .input-container label {
+        margin-bottom: 5px;
+      }
+      .disp-flex {
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+      }
+    </style>
+  </head>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+
+  <body>
+    <div class="wizard-container">
+      <div class="wizard">
+        <div class="step active" id="step0">
+          <i class="fas fa-magic icon"></i>
+          <button class="start-btn">Let's Go</button>
+        </div>
+        <div class="step" id="step1">
+          <i class="fas fa-hat-wizard icon"></i>
+          <h2 id="step1-heading">Please Enter License Key</h2>
+          <label for="licenseKey">License Key:</label>
+          <input
+            type="text"
+            id="licenseKey"
+            placeholder="License Key You Found In Email"
+            required
+          />
+          <p class="error-msg" id="licenseKeyError">License Key is required</p>
+
+          <button class="next-btn">Continue</button>
+        </div>
+        <div class="step" id="step2">
+          <i class="fas fa-scroll icon"></i>
+          <h2 id="step2-heading">Please Enter Credentials</h2>
+          <div id="additional-fields" style="display: none">
+            <button id="logoutBtn" aria-label="Logout" class="logout-btn">
+              <i class="fas fa-sign-out-alt"></i>
+            </button>
+            <button id="settingsBtn" aria-label="Settings" class="settings-btn">
+              <i class="fas fa-cog"></i>
+            </button>
+            <label for="openAPIKey">OPEN API KEY:</label>
+            <input
+              type="text"
+              id="openAPIKey"
+              required
+              placeholder="OPEN API KEY"
+            />
+            <p class="error-msg" id="openAPIKeyError">
+              Open API Key is required
+            </p>
+            <label for="Domain">Domain:</label>
+            <input
+              type="text"
+              required
+              readonly
+              id="Domain"
+              placeholder="Domain"
+            />
+            <p class="error-msg" id="DomainError">License Key is required</p>
+          </div>
+          <label for="wordpressUsername">Wordpress Username:</label>
+          <input
+            type="text"
+            id="wordpressUsername"
+            placeholder="Username for Wordpress"
+            required
+          />
+          <p class="error-msg" id="wordpressUsernameError">
+            Username is required
+          </p>
+          <label for="wordpressPassword">Wordpress Password:</label>
+          <input
+            type="password"
+            id="wordpressPassword"
+            placeholder="Password"
+            required
+          />
+          <p class="error-msg" id="wordpressPasswordError">
+            Password is required
+          </p>
+
+          <button class="next-btn">Save</button>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="step" id="step3">
+          <i class="fas fa-clipboard-check icon"></i>
+          <h2 id="step3-heading">Review Your Details</h2>
+          <div class="summary"></div>
+          <button class="back-btn">Back</button>
+          <button class="next-btn">Save</button>
+        </div>
+        <!-- Step 5 -->
+        <div class="step" id="step4">
+          <i class="fas fa-rocket icon"></i>
+          <button class="launch-btn">Launch 🚀</button>
+        </div>
+      </div>
+    </div>
+    <script src="hrpage.js"></script>
+    <script src="fetchWordpress.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@grammarly/editor-sdk?clientId=client_FZC9HEciSEVf2QEZmkQfLw"></script>
+  </body>
+</html>

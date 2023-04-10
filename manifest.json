@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "Wyzard",
+  "version": "1.0",
+  "permissions": ["activeTab", "tabs"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content_script.js"],
+      "css": [],
+      "content_security_policy": {
+        "extension_pages": "script-src 'self' 'wasm-unsafe-eval' 'inline-speculation-rules' http://localhost:* http://127.0.0.1:* https://cdn.jsdelivr.net; object-src 'self'"
+      }
+    }
+  ]
+}

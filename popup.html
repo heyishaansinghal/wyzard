@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes movingBackground {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        width: 220px;
+        height: 180px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Poppins", sans-serif;
+        background-image: linear-gradient(135deg, #68f1d947 0%, #63e7da94 100%);
+        border-radius: 16px;
+        overflow: hidden;
+        backdrop-filter: blur(10px);
+        animation: movingBackground 10s linear infinite;
+      }
+
+      button {
+        position: relative;
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: all 0.3s ease, background 1s linear;
+        animation: fadeIn 0.8s ease;
+        opacity: 0;
+        animation-fill-mode: forwards;
+      }
+
+      button:before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background-image: linear-gradient(135deg, #68f1d9 0%, #63e7da 100%);
+        transform: rotate(45deg) translate(-75%, -75%);
+        opacity: 0.5;
+        transition: all 0.3s ease;
+      }
+
+      button:hover {
+        background: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+      }
+
+      button:hover:before {
+        opacity: 0.8;
+        transform: rotate(45deg) translate(-50%, -50%);
+      }
+
+      button:active {
+        transform: translateY(0);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      body:hover {
+        animation: movingBackground 6s linear infinite;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="letsGoButton">Let's go</button>
+    <script src="popup.js"></script>
+  </body>
+</html>
