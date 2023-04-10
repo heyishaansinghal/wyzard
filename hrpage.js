@@ -8,16 +8,13 @@ const launchBtn = document.querySelector(".launch-btn");
 
 const additionalFields = document.getElementById("additional-fields");
 const verifyLicenseKey = (key) => {
-  const email = "ishaansinghalsocials@gmail.com";
   const webAppUrl =
-    "https://script.google.com/macros/s/AKfycbxh2lQdPux2bhjhx4SMyi_SuRZzI9GfayGQQW74G9mfgpM47ml9IRMt1QFXfppI_nc/exec";
+    "https://script.google.com/macros/s/AKfycbwZUtdE-7lrEomLXVp1dtd4t0zsgiAU7HGRxgEXCB1p0M14Svvu1iw9qz0GFzhCLew/exec";
 
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(
-        `${webAppUrl}?key=${encodeURIComponent(key)}&email=${encodeURIComponent(
-          email
-        )}`
+        `${webAppUrl}?key=${encodeURIComponent(key)}`
       );
       const data = await response.json();
       if (data.error) {
