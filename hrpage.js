@@ -162,7 +162,6 @@ nextBtns[1].addEventListener("click", (event) => {
     displaySummary();
     showStep(3);
   }
-  alert(!hasError);
 });
 
 // ...
