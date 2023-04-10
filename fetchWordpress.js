@@ -88,15 +88,12 @@ async function countGrammarMistakes(rawText) {
 
     const jsonResponse = await response.json();
     const matches = jsonResponse.matches;
-    let mistakeCount = 0;
+    let = 0;
 
     for (const match of matches) {
-      if (match.rule.issueType === "misspelling") {
-        mistakeCount++;
-      }
     }
 
-    return mistakeCount;
+    return;
   } catch (error) {
     console.error("Error fetching data from the API:", error);
     return -1;
@@ -860,24 +857,33 @@ function createAccordionItem(pageContent) {
   accordionHeader.addEventListener("mouseout", () => {
     accordionHeader.style.transform = "scale(1)";
   });
-  return countGrammarMistakes(pageText).then((mistakeCount) => {
-    const circleElement = document.createElement("div");
-    circleElement.innerHTML = mistakeCount;
-    circleElement.classList.add("circle-number");
-    circleElement.setAttribute(
-      "style",
-      "position: absolute; background-color: #d91837; width: 30px; height: 30px; line-height: 30px; border-radius: 50%; text-align: center; font-size: 16px; font-weight: 600; color: white; top: 10px; right: 10px;"
-    );
-    accordionHeader.appendChild(circleElement);
-    const accordionLink = document.createElement("a");
-    accordionLink.setAttribute("style", "text-decoration: none; color: #333;");
-    accordionLink.setAttribute("href", pageContent.url);
-    accordionLink.setAttribute("target", "_blank");
-    accordionLink.appendChild(accordionHeader);
 
-    accordionItem.appendChild(accordionLink);
-    return { accordionItem, mistakeCount };
-  });
+  const accordionLink = document.createElement("a");
+  accordionLink.setAttribute("style", "text-decoration: none; color: #333;");
+  accordionLink.setAttribute("href", pageContent.url);
+  accordionLink.setAttribute("target", "_blank");
+  accordionLink.appendChild(accordionHeader);
+
+  accordionItem.appendChild(accordionLink);
+  return { accordionItem };
+  // return countGrammarMistakes(pageText).then(() => {
+  //   // // const circleElement = document.createElement("div");
+  //   // // circleElement.innerHTML = ;
+  //   // // circleElement.classList.add("circle-number");
+  //   // // circleElement.setAttribute(
+  //   // //   "style",
+  //   // //   "position: absolute; background-color: #d91837; width: 30px; height: 30px; line-height: 30px; border-radius: 50%; text-align: center; font-size: 16px; font-weight: 600; color: white; top: 10px; right: 10px;"
+  //   // // );
+  //   // accordionHeader.appendChild(circleElement);
+  //   const accordionLink = document.createElement("a");
+  //   accordionLink.setAttribute("style", "text-decoration: none; color: #333;");
+  //   accordionLink.setAttribute("href", pageContent.url);
+  //   accordionLink.setAttribute("target", "_blank");
+  //   accordionLink.appendChild(accordionHeader);
+
+  //   accordionItem.appendChild(accordionLink);
+  //   return { accordionItem,  };
+  // });
 }
 function createSearchInput() {
   const searchInput = document.createElement("input");
@@ -1014,11 +1020,8 @@ async function fetchWordPressContent(siteUrl) {
         text: content.content.rendered,
       };
 
-      const { accordionItem, mistakeCount } = await createAccordionItem(
-        contentData
-      );
+      const { accordionItem } = await createAccordionItem(contentData);
       accordionItemsArray.push(accordionItem);
-      mistakesCounts.push(mistakeCount);
     });
 
     await Promise.all(promises);
